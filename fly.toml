@@ -1,0 +1,27 @@
+app = "seu-nome-de-app"
+primary_region = "iad" # Altere para a região desejada
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+  # Use o Dockerfile criado para a construção
+  dockerfile = "Dockerfile"
+
+[env]
+  # Variáveis de ambiente
+  APP_ENV = "production"
+  PHP_MEMORY_LIMIT = "512M"
+
+[services]
+  [[services.ports]]
+    internal_port = 9000
+    handlers = ["http"]
+
+  [[services.http_checks]]
+    interval = "15s"
+    grace_period = "5s"
+    method = "GET"
+    path = "/health"
+    protocol = "http"
+    restart_limit = 0
